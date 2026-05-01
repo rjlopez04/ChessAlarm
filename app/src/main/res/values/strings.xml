@@ -4,7 +4,7 @@
     <string name="set_alarm">Set Alarm</string>
     <string name="alarm_set_for">Alarm set for %1$s</string>
     <string name="puzzle_title">Solve to dismiss</string>
-    <string name="move_hint">Your move (e.g. Qh4)</string>
+    <string name="move_hint">Your move in UCI (e.g. d8h4)</string>
     <string name="submit">Submit</string>
     <string name="try_again">Wrong move — try again</string>
 </resources>

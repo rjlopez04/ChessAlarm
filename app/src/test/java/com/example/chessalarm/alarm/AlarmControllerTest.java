@@ -100,4 +100,25 @@ public class AlarmControllerTest {
         assertEquals(0, sound.stops);
         assertSame(AlarmController.State.IDLE, controller.getState());
     }
+
+    @Test
+    public void silenceStopsSoundButLeavesStateRinging() {
+        RecordingListener listener = new RecordingListener();
+        controller.addListener(listener);
+        controller.trigger();
+
+        controller.silence();
+
+        assertEquals(1, sound.stops);
+        assertSame(AlarmController.State.RINGING, controller.getState());
+        assertEquals(0, listener.dismissed);
+    }
+
+    @Test
+    public void silenceWhileIdleIsNoOp() {
+        controller.silence();
+
+        assertEquals(0, sound.stops);
+        assertSame(AlarmController.State.IDLE, controller.getState());
+    }
 }

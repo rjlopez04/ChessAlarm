@@ -56,6 +56,14 @@ public class PuzzleActivity extends AppCompatActivity implements AlarmStateListe
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        // Once the puzzle screen is visible, the alarm has done its job of waking the user.
+        // Silence the sound so solving isn't drowned out — state stays RINGING until dismissed.
+        AlarmController.getInstance(this).silence();
+    }
+
+    @Override
     protected void onDestroy() {
         AlarmController.getInstance(this).removeListener(this);
         super.onDestroy();

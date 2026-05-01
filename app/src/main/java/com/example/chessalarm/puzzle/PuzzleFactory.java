@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class PuzzleFactory {
+public class PuzzleFactory implements PuzzleSource {
 
     private static final List<ChessPuzzle> PUZZLES = Arrays.asList(
             // Fool's mate: position after 1.f3 e5 2.g4??, Black to move plays Qh4#
@@ -23,10 +23,12 @@ public class PuzzleFactory {
 
     private static final Random RANDOM = new Random();
 
+    @Override
     public List<ChessPuzzle> getAll() {
         return Collections.unmodifiableList(PUZZLES);
     }
 
+    @Override
     public ChessPuzzle random() {
         return PUZZLES.get(RANDOM.nextInt(PUZZLES.size()));
     }

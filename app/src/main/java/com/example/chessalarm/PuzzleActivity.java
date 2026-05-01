@@ -14,6 +14,7 @@ import com.example.chessalarm.puzzle.ChessPuzzle;
 import com.example.chessalarm.puzzle.MateInOneSolver;
 import com.example.chessalarm.puzzle.PuzzleFactory;
 import com.example.chessalarm.puzzle.PuzzleSolver;
+import com.example.chessalarm.ui.ChessBoardView;
 
 public class PuzzleActivity extends AppCompatActivity implements AlarmStateListener {
 
@@ -21,7 +22,7 @@ public class PuzzleActivity extends AppCompatActivity implements AlarmStateListe
     private final PuzzleFactory factory = new PuzzleFactory();
     private ChessPuzzle currentPuzzle;
 
-    private TextView fenView;
+    private ChessBoardView boardView;
     private TextView feedbackView;
     private EditText answerInput;
 
@@ -35,13 +36,13 @@ public class PuzzleActivity extends AppCompatActivity implements AlarmStateListe
                         | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                         | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
-        fenView = findViewById(R.id.fenView);
+        boardView = findViewById(R.id.boardView);
         feedbackView = findViewById(R.id.feedbackView);
         answerInput = findViewById(R.id.answerInput);
         Button submit = findViewById(R.id.submitButton);
 
         currentPuzzle = factory.random();
-        fenView.setText(currentPuzzle.getFen());
+        boardView.setPosition(currentPuzzle.getFen());
 
         AlarmController.getInstance(this).addListener(this);
 

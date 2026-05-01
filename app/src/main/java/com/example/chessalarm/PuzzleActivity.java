@@ -11,15 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.chessalarm.alarm.AlarmController;
 import com.example.chessalarm.alarm.AlarmStateListener;
 import com.example.chessalarm.puzzle.ChessPuzzle;
+import com.example.chessalarm.puzzle.LichessPuzzleRepository;
 import com.example.chessalarm.puzzle.MateInOneSolver;
-import com.example.chessalarm.puzzle.PuzzleFactory;
 import com.example.chessalarm.puzzle.PuzzleSolver;
+import com.example.chessalarm.puzzle.PuzzleSource;
 import com.example.chessalarm.ui.ChessBoardView;
 
 public class PuzzleActivity extends AppCompatActivity implements AlarmStateListener {
 
     private final PuzzleSolver solver = new MateInOneSolver();
-    private final PuzzleFactory factory = new PuzzleFactory();
+    private PuzzleSource puzzleSource;
     private ChessPuzzle currentPuzzle;
 
     private ChessBoardView boardView;
@@ -41,7 +42,8 @@ public class PuzzleActivity extends AppCompatActivity implements AlarmStateListe
         answerInput = findViewById(R.id.answerInput);
         Button submit = findViewById(R.id.submitButton);
 
-        currentPuzzle = factory.random();
+        puzzleSource = new LichessPuzzleRepository(this);
+        currentPuzzle = puzzleSource.random();
         boardView.setPosition(currentPuzzle.getFen());
 
         AlarmController.getInstance(this).addListener(this);

@@ -62,4 +62,13 @@ public class AlarmController {
             l.onAlarmDismissed();
         }
     }
+
+    /**
+     * Stops the alarm sound without dismissing the alarm. State remains {@link State#RINGING}
+     * so the user must still solve the puzzle to fully dismiss. No-op when idle.
+     */
+    public void silence() {
+        if (state == State.IDLE) return;
+        new StopAlarmCommand(soundPlayer).execute();
+    }
 }

@@ -7,7 +7,13 @@ public class MateInOneSolver implements PuzzleSolver {
         if (puzzle == null || userMove == null) {
             return false;
         }
-        return normalize(puzzle.getCorrectMove()).equals(normalize(userMove));
+        String input = normalize(userMove);
+        for (String accepted : puzzle.getAcceptedMoves()) {
+            if (accepted != null && normalize(accepted).equals(input)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String normalize(String move) {

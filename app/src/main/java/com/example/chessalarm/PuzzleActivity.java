@@ -15,6 +15,7 @@ import com.example.chessalarm.puzzle.LichessPuzzleRepository;
 import com.example.chessalarm.puzzle.MateInOneSolver;
 import com.example.chessalarm.puzzle.PuzzleSolver;
 import com.example.chessalarm.puzzle.PuzzleSource;
+import com.example.chessalarm.ui.ChessBoardView;
 
 public class PuzzleActivity extends AppCompatActivity implements AlarmStateListener {
 
@@ -22,7 +23,7 @@ public class PuzzleActivity extends AppCompatActivity implements AlarmStateListe
     private PuzzleSource puzzleSource;
     private ChessPuzzle currentPuzzle;
 
-    private TextView fenView;
+    private ChessBoardView boardView;
     private TextView feedbackView;
     private EditText answerInput;
 
@@ -36,14 +37,14 @@ public class PuzzleActivity extends AppCompatActivity implements AlarmStateListe
                         | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                         | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
-        fenView = findViewById(R.id.fenView);
+        boardView = findViewById(R.id.boardView);
         feedbackView = findViewById(R.id.feedbackView);
         answerInput = findViewById(R.id.answerInput);
         Button submit = findViewById(R.id.submitButton);
 
         puzzleSource = new LichessPuzzleRepository(this);
         currentPuzzle = puzzleSource.random();
-        fenView.setText(currentPuzzle.getFen());
+        boardView.setPosition(currentPuzzle.getFen());
 
         AlarmController.getInstance(this).addListener(this);
 
@@ -55,6 +56,14 @@ public class PuzzleActivity extends AppCompatActivity implements AlarmStateListe
                 feedbackView.setText(R.string.try_again);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Once the puzzle screen is visible, the alarm has done its job of waking the user.
+        // Silence the sound so solving isn't drowned out — state stays RINGING until dismissed.
+        AlarmController.getInstance(this).silence();
     }
 
     @Override
